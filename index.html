@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+		<meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>Control Remoto</title>
+        
+    </head>
+    <body><br>
+        
+			<header><br>
+				<h4>CONTROL REMOTO</h4>
+			</header>
+			<section>
+				<table border="0" align="center" cellpadding="20">
+					<tr>
+						<td></td>
+						<td><input type="button" id="AVANZA" value="AVANZA"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td><input type="button" id="IZQUIERDA"  value="IZQUIERDA"></td>
+						<td><input type="button" id="PARA"  value="PARA"></td>
+						<td><input type="button" id="DERECHA"  value="DERECHA"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="button" id="ATRAS"  value="ATRAS"></td>
+						<td></td>
+                        
+					</tr>
+
+				</table>
+               <button id="btn">Emitir</button> 
+                <video src="" id="video" style="width: 500px; height: 300px;" autoplay= "true"></video>
+                <canvas id="preview"></canvas>
+                <div class="status"></div>
+                
+			</section>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script> <!-- include socket.io client side script -->
+        <script>
+            //tenemos que usar una sentencia switch por tener multiples acciones si coincide con lo que realizo ejecuta el bloque
+            var mueve;
+           // var stream;
+        var socket = io(); //load socket.io-client and connect to the host that serves the page   
+        window.addEventListener("load", function(){ //when page loads
+            
+   
+      //termina el video streming      
+document.getElementById("AVANZA").addEventListener("click", function(){//cunado presione avanza el evento de dispara
+           mueve = 1;
+           socket.emit("avanza", mueve);// emitir el valor al servidor, como emito la wsolicitud?
+        });
+               
+document.getElementById("ATRAS").addEventListener("click", function(data){
+            mueve = 2;
+            socket.emit("atras", mueve);// emitir el valor al servidor
+            
+        });       
+document.getElementById("IZQUIERDA").addEventListener("click", function(data){
+           mueve =3; 
+           socket.emit("izquierda",mueve);// emitir el valor al servidor
+            
+});
+        document.getElementById("DERECHA").addEventListener("click", function(data){
+            mueve =4;
+            socket.emit("derecha",mueve);// emitir el valor al servidor
+       
+        });
+    document.getElementById("PARA").addEventListener("click", function(data){
+            mueve =5;
+            socket.emit("para", mueve);// emitir el valor al servidor
+       
+        });
+    });
+
+        </script>
+    </body>
+    </html> 
